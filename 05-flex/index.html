@@ -26,10 +26,14 @@
     .panels {
       min-height: 100vh;
       overflow: hidden;
+
+      display: flex;
+      flex-direction: row;
     }
 
     .panel {
-      background: #6B0F9C;
+      flex-grow: 1;
+
       box-shadow: inset 0 0 0 5px rgba(255,255,255,0.1);
       color: white;
       text-align: center;
@@ -42,7 +46,10 @@
         background 0.2s;
       font-size: 20px;
       background-size: cover;
-      background-position: center;
+      background: #6B0F9C center;
+
+      display: flex;
+      flex-direction: column; /* text appears one below the other */
     }
 
     .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
@@ -53,9 +60,15 @@
 
     /* Flex Children */
     .panel > * {
+      flex: 1 0 auto;
+
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
+
+      display: flex; /* basically only to center text within box */
+      justify-content: center;
+      align-items: center;
     }
 
     .panel p {
@@ -64,17 +77,23 @@
       text-shadow: 0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
       font-size: 2em;
     }
+
+    .panel > p:first-child { transform: translateY(-100%); }
+    .panel.open-active > p:first-child { transform: translateY(0); }
+
+    .panel > p:last-child { transform: translateY(100%); }
+    .panel.open-active > p:last-child { transform: translateY(0); }
     
     .panel p:nth-child(2) {
       font-size: 4em;
     }
 
     .panel.open {
+      flex: 5; /* 5 5 auto */
       font-size: 40px;
     }
 
   </style>
-
 
   <div class="panels">
     <div class="panel panel1">
@@ -105,6 +124,21 @@
   </div>
 
   <script>
+    let panels = document.querySelectorAll('.panel');
+
+    panels.forEach(panel => panel.addEventListener('click', toggleOpen));
+    panels.forEach(panel => panel.addEventListener('transitionend', toggleActive));
+
+    function toggleOpen() {
+      this.classList.toggle('open');
+
+    }
+
+    function toggleActive(e) {
+      if (e.propertyName.includes('flex')) {
+        this.classList.toggle('open-active');
+      }
+    }
 
   </script>
 
