@@ -7,6 +7,7 @@
 <body>
 
   <p onClick="makeGreen()">×BREAK×DOWN×</p>
+  <p>Look at the console bro.</p>
 
   <script>
     const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
@@ -18,28 +19,54 @@
     }
 
     // Regular
+    console.log('Hi! This is a normal console.log() statement.');
 
     // Interpolated
+    console.log('Hi, I used percent-s and my name is %s!', 'Siddhesh');
 
     // Styled
+    console.log('%c I used %c and am big and green!', 'color: green; font-size: 24px;');
 
     // warning!
+    console.warn('OH NO! WARNING.');
 
     // Error :|
+    console.error('OH NO! ERROR.');
 
     // Info
+    console.info('Point of information.');
 
     // Testing
+    console.assert(true === 'true', 'JS is so weird! This assertion failed.');
 
     // clearing
+    // console.clear(); // commented as we want to view rest of console statements
 
     // Viewing DOM Elements
+    let p = document.querySelector('p');
+    console.log(p);
+    console.dir(p);
 
     // Grouping together
+    console.log('Grouping dog data by name: ');
+    dogs.forEach(dog => {
+      console.group(`${dog.name}`); // groupCollapsed(...) for default collapsed groups
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old.`);
+      console.groupEnd();
+    })
 
     // counting
+    console.count('Sid');
+    console.count('Syd');
+    console.count('Sid');
+    console.count('Sid');
+    console.count('Syd');
 
     // timing
+    console.time('Logging in 1 second');
+    // String inside time() and timeEnd() must match exactly
+    setTimeout(() => console.timeEnd('Logging in 1 second'), 1000);
 
   </script>
 </body>
