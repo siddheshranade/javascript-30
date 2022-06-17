@@ -7,6 +7,21 @@
 </head>
 <body>
 <script>
+  let pressedKeys = [];
+  let secretCode = 'sidboi';
+  window.addEventListener('keyup', (e) => {
+    pressedKeys.push(e.key);
+
+    if (pressedKeys.length > secretCode.length) {
+      pressedKeys.shift();
+    }
+
+    if (pressedKeys.join('') === secretCode) {
+      cornify_add(); // Inbuilt function from https://www.cornify.com/js/cornify.js above to add fun stuff to page
+    }
+  });
 </script>
+
+<p>Type in "sidboi".</p>
 </body>
 </html>
