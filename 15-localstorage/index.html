@@ -28,7 +28,48 @@
 <script>
   const addItemsForm = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = [];
+  const items = JSON.parse(localStorage.getItem('items')) || [];
+
+  function addItem(e) {
+    e.preventDefault(); // Prevents page reloading after form submit
+    let text = this.querySelector('[name=item]').value;
+    let item = {
+      text: text,
+      done: false
+    };
+    items.push(item);
+    populateList(items, itemsList);
+    localStorage.setItem('items', JSON.stringify(items));
+    this.reset();
+  }
+
+  function populateList(plates = [], platesList) {
+    platesList.innerHTML = plates.map((plate, idx) => {
+      let s = '💩';
+      return `
+        <li>
+            <input type="checkbox" data-index=${idx} id="item${idx}" ${plate.done ? 'checked' : ''}/>
+            <label for="item${idx}">${plate.text}</label>
+        </li>
+      `
+    }).join('');
+  }
+
+  function toggleDone(e) {
+    if (!e.target.matches('input')) {
+      return;
+    }
+    let element = e.target;
+    let index = element.dataset.index;
+    items[index].done = !items[index].done; // Toggle the done property
+    localStorage.setItem('items', JSON.stringify(items));
+    populateList(items, itemsList);
+  }
+
+  addItemsForm.addEventListener('submit', addItem);
+  itemsList.addEventListener('click', toggleDone);
+
+  populateList(items, itemsList); // On page load
 
 </script>
 
