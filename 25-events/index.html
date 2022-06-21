@@ -42,7 +42,17 @@
 
 <button></button>
 <script>
+  const divs = document.querySelectorAll('div');
 
+  function logText(e) {
+    console.log(this.classList.value);
+    e.stopPropagation(); // Prevent the event from bubbling up the DOM hierarchy
+  }
+
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture: false,
+    once: true /* Will listen once and then unbind itself i.e. like removeEventListener(). Used in checkout buttons */
+  }));
 </script>
 </body>
 </html>
